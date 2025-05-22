@@ -2,4 +2,6 @@
     <string name="app_name">PickleApp</string>
     <string name="first_seen_in">First seen in:</string>
     <string name="last_known_location">Last know location:</string>
+    <string name="episodes">Episodes (%1$s):</string>
+    <string name="episode">Episode %1$s</string>
 </resources>

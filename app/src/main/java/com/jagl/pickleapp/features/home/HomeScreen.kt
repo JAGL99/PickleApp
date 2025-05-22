@@ -37,7 +37,7 @@ fun HomeScreen(
                 context,
                 errorMessage,
                 Toast.LENGTH_SHORT
-            )
+            ).show()
         }
     }
 

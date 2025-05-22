@@ -1,11 +1,8 @@
 package com.jagl.pickleapp.features.home.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,19 +11,15 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import coil.size.Size
-import com.jagl.pickleapp.R
+import androidx.compose.ui.unit.sp
+import com.jagl.pickleapp.core.utils.ui.components.CharacterImage
+import com.jagl.pickleapp.core.utils.ui.components.CharacterImageContainer
 import com.jagl.pickleapp.domain.model.CharacterDomain
 import com.jagl.pickleapp.ui.theme.PickleAppTheme
 
@@ -53,62 +46,19 @@ fun CharacterItem(
             }
             Spacer(modifier = Modifier.width(4.dp))
             Column(
-                modifier = modifier.fillMaxWidth().padding(2.dp)
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 2.dp, horizontal = 6.dp)
             ) {
                 Text(
                     text = item.name,
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-                Text(
-                    text = "${item.status} - ${item.species}",
-                    style = MaterialTheme.typography.bodySmall
-                )
-                Text(
-                    text = stringResource(R.string.first_seen_in),
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Text(
-                    text = item.origin,
-                    style = MaterialTheme.typography.bodySmall
-                )
-                Text(
-                    text = stringResource(R.string.last_known_location),
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Text(
-                    text = item.location,
-                    style = MaterialTheme.typography.bodySmall
+                    fontSize = 24.sp,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 2,
+                    style = MaterialTheme.typography.bodyLarge,
                 )
             }
         }
-    }
-}
-
-@Composable
-fun CharacterImage(image: String) {
-    Box {
-        val painter = rememberAsyncImagePainter(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(image)
-                .size(Size.ORIGINAL)
-                .build()
-        )
-        Image(
-            painter = painter,
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
-        )
-    }
-}
-
-@Composable
-fun CharacterImageContainer(
-    modifier: Modifier,
-    content: @Composable () -> Unit
-) {
-    Surface(modifier.aspectRatio(1f), RoundedCornerShape(4.dp)) {
-        content()
     }
 }
 
@@ -124,7 +74,8 @@ private fun PreviewCharacterItem() {
                 species = "Human",
                 image = "",
                 origin = "Earth (C-137)",
-                location = "Citadel of Ricks"
+                location = "Citadel of Ricks",
+                episodes = emptyList()
             ),
             onClick = {}
         )

@@ -7,5 +7,6 @@ data class CharacterDomain(
     val species: String,
     val image: String,
     val origin: String,
-    val location: String
+    val location: String,
+    val episodes: List<String>,
 )

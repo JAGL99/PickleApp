@@ -13,6 +13,7 @@ data class CharacterEntity(
     val status: String,
     val species: String,
     val image: String,
+    val episodes: List<String>,
     @ColumnInfo(name = "origin_name") val originName: String,
     @ColumnInfo(name = "location_name") val locationName: String,
 ) {
@@ -25,7 +26,8 @@ data class CharacterEntity(
                 species = domainModel.species,
                 image = domainModel.image,
                 originName = domainModel.origin,
-                locationName = domainModel.location
+                locationName = domainModel.location,
+                episodes = domainModel.episodes
             )
         }
     }
@@ -38,7 +40,8 @@ data class CharacterEntity(
             species = species,
             image = image,
             origin = originName,
-            location = locationName
+            location = locationName,
+            episodes = episodes
         )
     }
 }

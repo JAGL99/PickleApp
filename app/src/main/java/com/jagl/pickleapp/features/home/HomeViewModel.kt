@@ -36,10 +36,7 @@ class HomeViewModel @Inject constructor(
     private fun getCharacters() {
         viewModelScope.launch {
             _uiState.update {
-                it.copy(
-                    isLoading = true,
-                    errorMessage = null
-                )
+                it.copy(isLoading = true)
             }
             val lastValue = _uiState.value.data
             delay(5000L)
@@ -53,7 +50,8 @@ class HomeViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             data = data,
-                            isLoading = false
+                            isLoading = false,
+                            errorMessage = null
                         )
                     }
                 }
@@ -63,25 +61,30 @@ class HomeViewModel @Inject constructor(
 
     fun getMoreCharacters() {
         viewModelScope.launch {
-            _uiState.update {
-                it.copy(
-                    isLoading = true
-                )
-            }
-            delay(500L)
             val nextPage = _uiState.value.page + 1
+            if (_uiState.value.errorMessage != null) {
+                val result = characterRepository.requestMoreCharacters(nextPage)
+                if (result.isFailure) return@launch
+                else {
+                    _uiState.update {
+                        it.copy(
+                            errorMessage = null,
+                            isLoading = true
+                        )
+                    }
+                }
+            }
             val currenteData = _uiState.value.data
-
 
             if (currenteData.count() <= 20 * nextPage) {
                 val result = characterRepository.requestMoreCharacters(nextPage)
                 if (result.isFailure) {
                     _uiState.update {
                         it.copy(
-                            errorMessage = result.exceptionOrNull()?.message ?: "Unkow error"
+                            errorMessage = result.exceptionOrNull()?.message ?: "Unkow error",
+                            isLoading = false
                         )
                     }
-                    getCharacters()
                     return@launch
                 }
 
