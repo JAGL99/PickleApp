@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,22 +36,22 @@ class HomeViewModel @Inject constructor(
     private fun getCharacters() {
         viewModelScope.launch {
             _uiState.update {
-                it.copy(
-                    isLoading = true,
-                    errorMessage = null
-                )
+                it.copy(isLoading = true)
             }
+            val lastValue = _uiState.value.data
             delay(5000L)
             characterRepository.getCharacters()
                 .catch { e ->
+                    Timber.e(e)
                     _uiState.update { it.copy(errorMessage = e.message) }
-                    emit(emptyList())
+                    emit(lastValue)
                 }
                 .collectLatest { data ->
                     _uiState.update {
                         it.copy(
                             data = data,
-                            isLoading = false
+                            isLoading = false,
+                            errorMessage = null
                         )
                     }
                 }
@@ -60,24 +61,35 @@ class HomeViewModel @Inject constructor(
 
     fun getMoreCharacters() {
         viewModelScope.launch {
-            _uiState.update {
-                it.copy(
-                    isLoading = true
-                )
-            }
-            delay(500L)
             val nextPage = _uiState.value.page + 1
-            val result = characterRepository.requestMoreCharacters(nextPage)
-
-            if (result.isFailure) {
-                _uiState.update {
-                    it.copy(
-                        errorMessage = result.exceptionOrNull()?.message ?: "Unkow error"
-                    )
+            if (_uiState.value.errorMessage != null) {
+                val result = characterRepository.requestMoreCharacters(nextPage)
+                if (result.isFailure) return@launch
+                else {
+                    _uiState.update {
+                        it.copy(
+                            errorMessage = null,
+                            isLoading = true
+                        )
+                    }
                 }
-                getCharacters()
-                return@launch
             }
+            val currenteData = _uiState.value.data
+
+            if (currenteData.count() <= 20 * nextPage) {
+                val result = characterRepository.requestMoreCharacters(nextPage)
+                if (result.isFailure) {
+                    _uiState.update {
+                        it.copy(
+                            errorMessage = result.exceptionOrNull()?.message ?: "Unkow error",
+                            isLoading = false
+                        )
+                    }
+                    return@launch
+                }
+
+            }
+
             _uiState.update {
                 it.copy(page = nextPage)
             }

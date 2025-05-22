@@ -3,6 +3,7 @@ package com.jagl.pickleapp.core.repositories
 import com.jagl.critiq.core.utils.dispatcherProvider.DispatcherProvider
 import com.jagl.pickleapp.core.local.source.CharacterRoomSource
 import com.jagl.pickleapp.core.remote.api.RickAndMortyApi
+import com.jagl.pickleapp.core.utils.extensions.getLastNumberOfUrl
 import com.jagl.pickleapp.domain.model.CharacterDomain
 import com.jagl.pickleapp.domain.model.Info
 import com.jagl.pickleapp.domain.model.PaginatedCharacters
@@ -21,7 +22,7 @@ class CharacterRepositoryImpl @Inject constructor(
 ) : CharacterRepository {
 
     override fun getCharacters(): Flow<List<CharacterDomain>> = flow {
-        local.getAll().collect{
+        local.getAll().collect {
             if (it.isEmpty()) {
                 val response = remote.getCharacters(1)
                 val paginateCharacters = PaginatedCharacters(
@@ -36,7 +37,8 @@ class CharacterRepositoryImpl @Inject constructor(
                             species = it.species ?: "",
                             image = it.image ?: "",
                             origin = it.origin?.name ?: "",
-                            location = it.location?.name ?: ""
+                            location = it.location?.name ?: "",
+                            episodes = it.episode?.map { it.getLastNumberOfUrl() } ?: emptyList()
                         )
                     }.orEmpty()
                 )
@@ -64,7 +66,8 @@ class CharacterRepositoryImpl @Inject constructor(
                         species = it.species ?: "",
                         image = it.image ?: "",
                         origin = it.origin?.name ?: "",
-                        location = it.location?.name ?: ""
+                        location = it.location?.name ?: "",
+                        episodes = it.episode?.map { it.getLastNumberOfUrl() } ?: emptyList()
                     )
                 }.orEmpty()
             )
