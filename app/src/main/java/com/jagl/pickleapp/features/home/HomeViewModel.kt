@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,11 +41,13 @@ class HomeViewModel @Inject constructor(
                     errorMessage = null
                 )
             }
+            val lastValue = _uiState.value.data
             delay(5000L)
             characterRepository.getCharacters()
                 .catch { e ->
+                    Timber.e(e)
                     _uiState.update { it.copy(errorMessage = e.message) }
-                    emit(emptyList())
+                    emit(lastValue)
                 }
                 .collectLatest { data ->
                     _uiState.update {
@@ -67,17 +70,23 @@ class HomeViewModel @Inject constructor(
             }
             delay(500L)
             val nextPage = _uiState.value.page + 1
-            val result = characterRepository.requestMoreCharacters(nextPage)
+            val currenteData = _uiState.value.data
 
-            if (result.isFailure) {
-                _uiState.update {
-                    it.copy(
-                        errorMessage = result.exceptionOrNull()?.message ?: "Unkow error"
-                    )
+
+            if (currenteData.count() <= 20 * nextPage) {
+                val result = characterRepository.requestMoreCharacters(nextPage)
+                if (result.isFailure) {
+                    _uiState.update {
+                        it.copy(
+                            errorMessage = result.exceptionOrNull()?.message ?: "Unkow error"
+                        )
+                    }
+                    getCharacters()
+                    return@launch
                 }
-                getCharacters()
-                return@launch
+
             }
+
             _uiState.update {
                 it.copy(page = nextPage)
             }

@@ -1,7 +1,7 @@
 package com.jagl.pickleapp.features.home.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,7 +18,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -35,11 +34,13 @@ import com.jagl.pickleapp.ui.theme.PickleAppTheme
 fun CharacterItem(
     modifier: Modifier = Modifier,
     item: CharacterDomain,
+    onClick: (id: Long) -> Unit,
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(6.dp),
+            .padding(6.dp)
+            .clickable(onClick = { onClick(item.id) }),
         shape = RoundedCornerShape(corner = CornerSize(12.dp))
     ) {
         Column(
@@ -52,7 +53,7 @@ fun CharacterItem(
             }
             Spacer(modifier = Modifier.width(4.dp))
             Column(
-                modifier = modifier.fillMaxWidth()
+                modifier = modifier.fillMaxWidth().padding(2.dp)
             ) {
                 Text(
                     text = item.name,
@@ -113,7 +114,7 @@ fun CharacterImageContainer(
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewCharacterItem() {
+private fun PreviewCharacterItem() {
     PickleAppTheme {
         CharacterItem(
             item = CharacterDomain(
@@ -124,7 +125,8 @@ fun PreviewCharacterItem() {
                 image = "",
                 origin = "Earth (C-137)",
                 location = "Citadel of Ricks"
-            )
+            ),
+            onClick = {}
         )
     }
 }

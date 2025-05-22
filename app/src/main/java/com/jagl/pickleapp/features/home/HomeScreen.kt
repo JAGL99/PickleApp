@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,13 +20,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jagl.pickleapp.features.home.components.CharacterItem
 import com.jagl.pickleapp.features.home.components.FullScreenLoading
-import kotlinx.coroutines.flow.SharedFlow
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    onNavigateToDetail: (Long) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val uiEvent = viewModel.uiEvent
@@ -42,14 +40,23 @@ fun HomeScreen(
             )
         }
     }
+
+    LaunchedEffect(uiEvent) {
+        uiEvent.collect { event ->
+            when (event) {
+                is UiEvent.GoToCharacterDetails -> onNavigateToDetail(event.characterId)
+            }
+        }
+    }
+
     Scaffold(
         modifier = modifier.fillMaxSize()
     ) { innerPadding ->
         HomeContent(
             modifier = modifier.padding(innerPadding),
             uiState = uiState,
-            uiEvent = uiEvent,
-            getCharacters = viewModel::getMoreCharacters
+            getMoreCharacters = viewModel::getMoreCharacters,
+            onClick = viewModel::onGoToDetail
         )
 
     }
@@ -59,8 +66,8 @@ fun HomeScreen(
 fun HomeContent(
     modifier: Modifier = Modifier.fillMaxSize(),
     uiState: UiState,
-    uiEvent: SharedFlow<UiEvent>,
-    getCharacters: () -> Unit,
+    getMoreCharacters: () -> Unit,
+    onClick: (id: Long) -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -79,9 +86,9 @@ fun HomeContent(
         ) {
             itemsIndexed(items = data) { index, character ->
                 if (!uiState.isLoading && ((index + 1) >= (uiState.page * 20))) {
-                    getCharacters()
+                    getMoreCharacters()
                 }
-                CharacterItem(item = character)
+                CharacterItem(item = character, onClick = onClick)
             }
         }
     }
@@ -90,8 +97,8 @@ fun HomeContent(
 
 @Preview(showBackground = true)
 @Composable
-fun HomeScreenPreview() {
-    //val uiState = UiState.Success(listOf())
-    //HomeContent(uiState = uiState, uiEvent = uiEvent)
+private fun HomeScreenPreview() {
+    val uiState = UiState()
+    HomeContent(uiState = uiState, onClick = {}, getMoreCharacters = {})
 }
 
