@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PickleApp</string>
+    <string name="first_seen_in">Primer vez visto en:</string>
+    <string name="last_known_location">Se vio por ultima vez en:</string>
 </resources>
