@@ -1,4 +1,4 @@
-package com.jagl.pickleapp.core.repositories
+package com.jagl.pickleapp.core.repositories.character
 
 import com.jagl.critiq.core.utils.dispatcherProvider.DispatcherProvider
 import com.jagl.pickleapp.core.local.source.CharacterRoomSource
@@ -7,7 +7,6 @@ import com.jagl.pickleapp.core.utils.extensions.getLastNumberOfUrl
 import com.jagl.pickleapp.domain.model.CharacterDomain
 import com.jagl.pickleapp.domain.model.Info
 import com.jagl.pickleapp.domain.model.PaginatedCharacters
-import com.jagl.pickleapp.domain.repository.CharacterRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn

@@ -9,9 +9,6 @@ object GetCharacters {
         @SerializedName("results")
         val characters: List<ApiCharacters>?
     ) {
-        data class ApiInfo(
-            val pages: Int?
-        )
 
         data class ApiCharacters(
             val created: String?,

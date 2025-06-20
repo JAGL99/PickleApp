@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.jagl.pickleapp.features.home.components.CharacterItem
+import com.jagl.pickleapp.features.home.components.EpisodeItem
 import com.jagl.pickleapp.features.home.components.FullScreenLoading
 
 @Composable
@@ -44,7 +44,7 @@ fun HomeScreen(
     LaunchedEffect(uiEvent) {
         uiEvent.collect { event ->
             when (event) {
-                is UiEvent.GoToCharacterDetails -> onNavigateToDetail(event.characterId)
+                is UiEvent.GoToEpisodeDetails -> onNavigateToDetail(event.episodeId)
             }
         }
     }
@@ -55,7 +55,7 @@ fun HomeScreen(
         HomeContent(
             modifier = modifier.padding(innerPadding),
             uiState = uiState,
-            getMoreCharacters = viewModel::getMoreCharacters,
+            getMoreCharacters = viewModel::getMoreEpisodes,
             onClick = viewModel::onGoToDetail
         )
 
@@ -82,13 +82,14 @@ fun HomeContent(
         val data = uiState.data
 
         LazyVerticalGrid(
-            columns = GridCells.Fixed(2) // 2 columnas
+            modifier = Modifier.fillMaxSize(),
+            columns = GridCells.Fixed(1)
         ) {
-            itemsIndexed(items = data) { index, character ->
+            itemsIndexed(items = data) { index, episode ->
                 if (!uiState.isLoading && ((index + 1) >= (uiState.page * 20))) {
                     getMoreCharacters()
                 }
-                CharacterItem(item = character, onClick = onClick)
+                EpisodeItem(item = episode, onClick = onClick)
             }
         }
     }

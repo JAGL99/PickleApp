@@ -1,4 +1,4 @@
-package com.jagl.pickleapp.domain.repository
+package com.jagl.pickleapp.core.repositories.character
 
 import com.jagl.pickleapp.domain.model.CharacterDomain
 import com.jagl.pickleapp.domain.model.Info
