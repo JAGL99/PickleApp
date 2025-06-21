@@ -2,7 +2,7 @@ package com.jagl.pickleapp.core.repositories.episodes
 
 import com.jagl.critiq.core.utils.dispatcherProvider.DispatcherProvider
 import com.jagl.pickleapp.core.remote.model.GetEpisodes
-import com.jagl.pickleapp.core.remote.source.RemoteEpisodesDataSource
+import com.jagl.pickleapp.core.remote.source.episode.EpisodesRemoteDataSource
 import com.jagl.pickleapp.core.utils.extensions.SEARCH_BY_EPISODE
 import com.jagl.pickleapp.core.utils.extensions.SEARCH_BY_NAME
 import com.jagl.pickleapp.domain.model.EpisodeDomain
@@ -10,7 +10,7 @@ import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class EpisodeRepositoryImpl @Inject constructor(
-    private val remoteDataSource: RemoteEpisodesDataSource,
+    private val remoteDataSource: EpisodesRemoteDataSource,
     private val dispatcherProvider: DispatcherProvider
 ) : EpisodeRepository {
 

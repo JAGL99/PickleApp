@@ -1,6 +1,6 @@
 package com.jagl.pickleapp.core.remote.api
 
-import com.jagl.pickleapp.core.remote.model.GetCharacters
+import com.jagl.pickleapp.core.remote.model.GetCharacterById
 import com.jagl.pickleapp.core.remote.model.GetEpisodes
 import retrofit2.Response
 import retrofit2.http.GET
@@ -9,10 +9,10 @@ import retrofit2.http.Query
 
 interface RickAndMortyApi {
 
-    @GET("character")
-    suspend fun getCharacters(
-        @Query("page") id: Int,
-    ): GetCharacters.Response
+    @GET("character/{id}")
+    suspend fun getCharacterById(
+        @Path("id") id: Int
+    ): Response<GetCharacterById.Response>
 
     @GET("episode/")
     suspend fun getEpisodes(

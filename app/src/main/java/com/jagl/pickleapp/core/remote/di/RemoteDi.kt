@@ -1,8 +1,10 @@
 package com.jagl.pickleapp.core.remote.di
 
 import com.jagl.pickleapp.core.remote.api.RickAndMortyApi
-import com.jagl.pickleapp.core.remote.source.RemoteEpisodesDataSource
-import com.jagl.pickleapp.core.remote.source.RemoteEpisodesDataSourceImpl
+import com.jagl.pickleapp.core.remote.source.character.CharacterRemoteDataSource
+import com.jagl.pickleapp.core.remote.source.character.CharacterRemoteDataSourceImpl
+import com.jagl.pickleapp.core.remote.source.episode.EpisodesRemoteDataSource
+import com.jagl.pickleapp.core.remote.source.episode.EpisodesRemoteDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -59,8 +61,14 @@ object RemoteDi {
 
     @Singleton
     @Provides
-    fun provideEpisodeDataSource(api: RickAndMortyApi): RemoteEpisodesDataSource {
-        return RemoteEpisodesDataSourceImpl(api)
+    fun provideCharacterDataSource(api: RickAndMortyApi): CharacterRemoteDataSource {
+        return CharacterRemoteDataSourceImpl(api)
+    }
+
+    @Singleton
+    @Provides
+    fun provideEpisodeDataSource(api: RickAndMortyApi): EpisodesRemoteDataSource {
+        return EpisodesRemoteDataSourceImpl(api)
     }
 
 

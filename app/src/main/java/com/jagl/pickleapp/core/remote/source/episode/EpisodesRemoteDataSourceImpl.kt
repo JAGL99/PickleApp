@@ -1,13 +1,13 @@
-package com.jagl.pickleapp.core.remote.source
+package com.jagl.pickleapp.core.remote.source.episode
 
 import com.jagl.pickleapp.core.remote.api.RickAndMortyApi
 import com.jagl.pickleapp.core.remote.model.GetEpisodes
 import javax.inject.Inject
 
 
-class RemoteEpisodesDataSourceImpl @Inject constructor(
+class EpisodesRemoteDataSourceImpl @Inject constructor(
     private val api: RickAndMortyApi
-) : RemoteEpisodesDataSource {
+) : EpisodesRemoteDataSource {
 
     override suspend fun getEpisodesByPage(page: Int): Result<GetEpisodes.Response> {
         val request = api.getEpisodes(page = page)
