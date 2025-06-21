@@ -1,4 +1,4 @@
-package com.jagl.pickleapp.core.local.source
+package com.jagl.pickleapp.core.local.source.character
 
 import com.jagl.pickleapp.core.local.daos.CharacterDao
 import com.jagl.pickleapp.core.local.entities.CharacterEntity
@@ -7,13 +7,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class CharacterRoomSourceImpl @Inject constructor(
+class CharacterLocalDataSourceImpl @Inject constructor(
     private val characterDao: CharacterDao
-) : CharacterRoomSource {
-
-    override fun getAll(): Flow<List<CharacterDomain>> {
-        return characterDao.getAllCharacters().map { it.map { entity -> entity.toDomain() } }
-    }
+) : CharacterLocalDataSource {
 
     override fun getById(id: Long): Flow<CharacterDomain?> {
         return characterDao.getCharacterById(id)

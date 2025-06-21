@@ -11,9 +11,21 @@ class StringListConverter {
     }
 
     @TypeConverter
-    fun toStringList(data: String?): List<String> {
+    fun toStringListOfString(data: String?): List<String> {
         if (data.isNullOrEmpty()) return emptyList()
         val listType = object : TypeToken<List<String>>() {}.type
+        return Gson().fromJson(data, listType)
+    }
+
+    @TypeConverter
+    fun fromLongList(list: List<Long>?): String {
+        return Gson().toJson(list)
+    }
+
+    @TypeConverter
+    fun toStringListOfLong(data: String?): List<Long> {
+        if (data.isNullOrEmpty()) return emptyList()
+        val listType = object : TypeToken<List<Long>>() {}.type
         return Gson().fromJson(data, listType)
     }
 }

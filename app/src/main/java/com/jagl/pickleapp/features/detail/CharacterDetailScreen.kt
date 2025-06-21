@@ -12,7 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.jagl.pickleapp.features.detail.components.CharacterDetailItem
 
 @Composable
-fun DetailScreen(
+fun CharacterDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: DetailViewModel = hiltViewModel(),
     onBack: () -> Unit
@@ -22,7 +22,7 @@ fun DetailScreen(
     Scaffold(
         modifier = modifier.fillMaxSize()
     ) { innerPadding ->
-        DetailScreenContent(
+        CharacterDetailScreenContent(
             modifier = modifier.padding(innerPadding),
             uiState = uiState
         )
@@ -32,7 +32,7 @@ fun DetailScreen(
 }
 
 @Composable
-fun DetailScreenContent(
+fun CharacterDetailScreenContent(
     modifier: Modifier = Modifier,
     uiState: UiState
 ) {
