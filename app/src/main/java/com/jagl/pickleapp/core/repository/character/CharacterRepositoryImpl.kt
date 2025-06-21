@@ -1,4 +1,4 @@
-package com.jagl.pickleapp.core.repositories.character
+package com.jagl.pickleapp.core.repository.character
 
 import com.jagl.critiq.core.utils.dispatcherProvider.DispatcherProvider
 import com.jagl.pickleapp.core.local.source.character.CharacterLocalDataSource

@@ -115,7 +115,8 @@ private fun PreviewEpisodeItem() {
                 episode = "S01E01",
                 charactersInEpisode = emptyList(),
                 url = "",
-                created = ""
+                created = "",
+                page = 1
             ),
             onClick = {}
         )

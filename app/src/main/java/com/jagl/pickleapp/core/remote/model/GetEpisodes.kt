@@ -1,6 +1,7 @@
 package com.jagl.pickleapp.core.remote.model
 
 import com.google.gson.annotations.SerializedName
+import com.jagl.pickleapp.core.utils.extensions.DEFAULT_PAGE_VALUE
 import com.jagl.pickleapp.domain.model.EpisodeDomain
 
 object GetEpisodes {
@@ -31,7 +32,8 @@ object GetEpisodes {
                     characterUrl.substringAfterLast("/").toLongOrNull()
                 },
                 url = this.url,
-                created = this.created
+                created = this.created,
+                page = Int.DEFAULT_PAGE_VALUE
             )
         }
     }

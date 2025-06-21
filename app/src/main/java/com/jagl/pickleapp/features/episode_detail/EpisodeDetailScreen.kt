@@ -110,7 +110,8 @@ fun EpisodeDetailScreenPreview() {
             episode = "S01E01",
             charactersInEpisode = emptyList(),
             url = "https://rickandmortyapi.com/api/episode/1",
-            created = "2013-11-10T12:56:33.798Z"
+            created = "2013-11-10T12:56:33.798Z",
+            page = 1
         ),
         isLoading = false,
         errorMessage = null,

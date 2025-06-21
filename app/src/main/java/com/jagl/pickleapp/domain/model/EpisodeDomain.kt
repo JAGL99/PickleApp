@@ -7,5 +7,6 @@ data class EpisodeDomain(
     val episode: String,
     val charactersInEpisode: List<Long>,
     val url: String,
-    val created: String
+    val created: String,
+    val page: Int
 )

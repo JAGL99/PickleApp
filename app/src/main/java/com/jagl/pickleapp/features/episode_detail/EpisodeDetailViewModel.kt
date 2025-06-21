@@ -3,8 +3,8 @@ package com.jagl.pickleapp.features.episode_detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jagl.pickleapp.core.repositories.character.CharacterRepository
-import com.jagl.pickleapp.core.repositories.episodes.EpisodeRepository
+import com.jagl.pickleapp.core.repository.character.CharacterRepository
+import com.jagl.pickleapp.core.repository.episode.EpisodeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -1,4 +1,4 @@
-package com.jagl.pickleapp.core.repositories.character
+package com.jagl.pickleapp.core.repository.character
 
 import com.jagl.pickleapp.domain.model.CharacterDomain
 import kotlinx.coroutines.flow.Flow
