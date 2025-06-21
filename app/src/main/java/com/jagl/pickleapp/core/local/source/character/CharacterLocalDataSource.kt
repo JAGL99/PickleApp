@@ -1,10 +1,9 @@
-package com.jagl.pickleapp.core.local.source
+package com.jagl.pickleapp.core.local.source.character
 
 import com.jagl.pickleapp.domain.model.CharacterDomain
 import kotlinx.coroutines.flow.Flow
 
-interface CharacterRoomSource {
-    fun getAll(): Flow<List<CharacterDomain>>
+interface CharacterLocalDataSource {
     fun getById(id: Long): Flow<CharacterDomain?>
     suspend fun insertAll(domain: List<CharacterDomain>)
     suspend fun insert(domain: CharacterDomain)

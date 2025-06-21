@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.jagl.pickleapp.core.local.AppDatabase
 import com.jagl.pickleapp.core.local.daos.CharacterDao
-import com.jagl.pickleapp.core.local.source.CharacterRoomSourceImpl
-import com.jagl.pickleapp.core.local.source.CharacterRoomSource
+import com.jagl.pickleapp.core.local.source.character.CharacterLocalDataSourceImpl
+import com.jagl.pickleapp.core.local.source.character.CharacterLocalDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,10 +39,10 @@ object DatabaseDi {
 
     @Singleton
     @Provides
-    fun provideCharacterRoomSource(
+    fun provideCharacterLocalDataSource(
         characterDao: CharacterDao
-    ): CharacterRoomSource {
-        return CharacterRoomSourceImpl(characterDao)
+    ): CharacterLocalDataSource {
+        return CharacterLocalDataSourceImpl(characterDao)
     }
 
 }

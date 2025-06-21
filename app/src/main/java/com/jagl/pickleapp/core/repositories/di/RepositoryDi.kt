@@ -1,7 +1,7 @@
 package com.jagl.pickleapp.core.repositories.di
 
 import com.jagl.critiq.core.utils.dispatcherProvider.DispatcherProvider
-import com.jagl.pickleapp.core.local.source.CharacterRoomSource
+import com.jagl.pickleapp.core.local.source.character.CharacterLocalDataSource
 import com.jagl.pickleapp.core.remote.source.character.CharacterRemoteDataSource
 import com.jagl.pickleapp.core.remote.source.episode.EpisodesRemoteDataSource
 import com.jagl.pickleapp.core.repositories.character.CharacterRepository
@@ -21,21 +21,26 @@ object RepositoryDi {
     @Singleton
     @Provides
     fun provideCharacterRepository(
-        characterRemoteDataSource: CharacterRemoteDataSource,
-        database: CharacterRoomSource,
+        remoteDataSource: CharacterRemoteDataSource,
+        localDataSource: CharacterLocalDataSource,
         dispatcherProvider: DispatcherProvider
     ): CharacterRepository {
-        return CharacterRepositoryImpl(characterRemoteDataSource, database, dispatcherProvider)
+        return CharacterRepositoryImpl(
+            remoteDataSource = remoteDataSource,
+            localDataSource = localDataSource,
+            dispatcherProvider = dispatcherProvider
+        )
     }
 
     @Singleton
     @Provides
     fun provideEpisodeRepository(
-        episodesRemoteDataSource: EpisodesRemoteDataSource,
+        remoteDataSource: EpisodesRemoteDataSource,
         dispatcherProvider: DispatcherProvider
     ): EpisodeRepository {
         return EpisodeRepositoryImpl(
-            episodesRemoteDataSource, dispatcherProvider
+            remoteDataSource = remoteDataSource,
+            dispatcherProvider = dispatcherProvider
         )
     }
 }
