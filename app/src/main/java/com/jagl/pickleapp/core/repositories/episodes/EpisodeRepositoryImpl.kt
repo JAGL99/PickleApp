@@ -5,6 +5,7 @@ import com.jagl.pickleapp.core.remote.model.GetEpisodes
 import com.jagl.pickleapp.core.remote.source.RemoteEpisodesDataSource
 import com.jagl.pickleapp.core.utils.extensions.SEARCH_BY_EPISODE
 import com.jagl.pickleapp.core.utils.extensions.SEARCH_BY_NAME
+import com.jagl.pickleapp.domain.model.EpisodeDomain
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
@@ -13,19 +14,21 @@ class EpisodeRepositoryImpl @Inject constructor(
     private val dispatcherProvider: DispatcherProvider
 ) : EpisodeRepository {
 
-    override fun getEpisodesByPage(page: Int): List<GetEpisodes.RemoteEpisode> {
+    override fun getEpisodesByPage(page: Int): List<EpisodeDomain> {
         val response = runBlocking(
             context = dispatcherProvider.io
         ) {
-            remoteDataSource.getEpisodesByPage(page).getOrThrow().episodes
+            remoteDataSource.getEpisodesByPage(page).getOrThrow().episodes?.map(
+                GetEpisodes.RemoteEpisode::toDomain
+            ) ?: emptyList()
         }
-        return response.orEmpty()
+        return response
     }
 
     override fun getEpisodesByQuery(
         query: String,
         type: String
-    ): List<GetEpisodes.RemoteEpisode> {
+    ): List<EpisodeDomain> {
         val response = runBlocking(
             context = dispatcherProvider.io
         ) {
@@ -37,15 +40,15 @@ class EpisodeRepositoryImpl @Inject constructor(
                 else -> emptyList()
             }
         }
-        return response
+        return response.map(GetEpisodes.RemoteEpisode::toDomain)
     }
 
-    override fun getEpisodeById(id: Long): GetEpisodes.RemoteEpisode {
+    override fun getEpisodeById(id: Long): EpisodeDomain {
         val response = runBlocking(
             context = dispatcherProvider.io
         ) {
             remoteDataSource.getEpisodeById(id.toInt())
         }
-        return response.getOrThrow()
+        return response.getOrThrow().toDomain()
     }
 }

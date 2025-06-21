@@ -1,14 +1,14 @@
 package com.jagl.pickleapp.core.repositories.episodes
 
-import com.jagl.pickleapp.core.remote.model.GetEpisodes
+import com.jagl.pickleapp.domain.model.EpisodeDomain
 
 interface EpisodeRepository {
-    fun getEpisodesByPage(page: Int): List<GetEpisodes.RemoteEpisode>
+    fun getEpisodesByPage(page: Int): List<EpisodeDomain>
 
     fun getEpisodesByQuery(
         query: String,
         type: String
-    ): List<GetEpisodes.RemoteEpisode>
+    ): List<EpisodeDomain>
 
-    fun getEpisodeById(id: Long): GetEpisodes.RemoteEpisode
+    fun getEpisodeById(id: Long): EpisodeDomain
 }

@@ -17,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.jagl.pickleapp.core.remote.model.GetEpisodes
 import com.jagl.pickleapp.domain.model.CharacterDomain
+import com.jagl.pickleapp.domain.model.EpisodeDomain
 import com.jagl.pickleapp.features.home.components.CharacterItem
 
 @Composable
@@ -103,15 +103,12 @@ fun EpisodeDetailScreenContent(
 @Composable
 fun EpisodeDetailScreenPreview() {
     val uiState = UiState(
-        data = GetEpisodes.RemoteEpisode(
+        data = EpisodeDomain(
             id = 1,
             name = "Pilot",
             airDate = "December 2, 2013",
             episode = "S01E01",
-            characters = listOf(
-                "https://rickandmortyapi.com/api/character/1",
-                "https://rickandmortyapi.com/api/character/2"
-            ),
+            charactersInEpisode = emptyList(),
             url = "https://rickandmortyapi.com/api/episode/1",
             created = "2013-11-10T12:56:33.798Z"
         ),

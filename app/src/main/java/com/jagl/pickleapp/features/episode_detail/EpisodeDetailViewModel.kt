@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jagl.pickleapp.core.repositories.character.CharacterRepository
 import com.jagl.pickleapp.core.repositories.episodes.EpisodeRepository
-import com.jagl.pickleapp.core.utils.extensions.getLastNumberOfUrl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -36,8 +35,7 @@ class EpisodeDetailViewModel @Inject constructor(
             _uiState.update { it.copy(isLoading = true) }
             try {
                 val data = episodeRepository.getEpisodeById(id)
-                val characters = data.characters.mapNotNull { character ->
-                    val characterId = character.getLastNumberOfUrl().toLong()
+                val characters = data.charactersInEpisode.mapNotNull { characterId ->
                     val character = characterRepository.getCharacterById(characterId).firstOrNull()
                     character
                 }

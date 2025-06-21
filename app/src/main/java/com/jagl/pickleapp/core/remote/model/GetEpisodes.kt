@@ -1,6 +1,7 @@
 package com.jagl.pickleapp.core.remote.model
 
 import com.google.gson.annotations.SerializedName
+import com.jagl.pickleapp.domain.model.EpisodeDomain
 
 object GetEpisodes {
 
@@ -19,5 +20,19 @@ object GetEpisodes {
         val id: Long,
         val name: String,
         val url: String
-    )
+    ) {
+        fun toDomain(): EpisodeDomain {
+            return EpisodeDomain(
+                id = this.id,
+                name = this.name,
+                airDate = this.airDate,
+                episode = this.episode,
+                charactersInEpisode = this.characters.mapNotNull { characterUrl ->
+                    characterUrl.substringAfterLast("/").toLongOrNull()
+                },
+                url = this.url,
+                created = this.created
+            )
+        }
+    }
 }

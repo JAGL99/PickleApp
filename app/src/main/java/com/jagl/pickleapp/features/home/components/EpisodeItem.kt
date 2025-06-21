@@ -23,13 +23,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jagl.pickleapp.core.remote.model.GetEpisodes
+import com.jagl.pickleapp.domain.model.EpisodeDomain
 import com.jagl.pickleapp.ui.theme.PickleAppTheme
 
 @Composable
 fun EpisodeItem(
     modifier: Modifier = Modifier,
-    item: GetEpisodes.RemoteEpisode,
+    item: EpisodeDomain,
     onClick: (id: Long) -> Unit,
 ) {
     Card(
@@ -108,12 +108,12 @@ fun EpisodeItem(
 private fun PreviewEpisodeItem() {
     PickleAppTheme {
         EpisodeItem(
-            item = GetEpisodes.RemoteEpisode(
+            item = EpisodeDomain(
                 id = 1L,
                 name = "Pilot",
                 airDate = "December 2, 2013",
                 episode = "S01E01",
-                characters = emptyList(),
+                charactersInEpisode = emptyList(),
                 url = "",
                 created = ""
             ),

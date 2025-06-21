@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jagl.pickleapp.core.repositories.episodes.EpisodeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -98,7 +97,6 @@ class HomeViewModel @Inject constructor(
     fun onGoToDetail(id: Long) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
-            delay(500L)
             val event = UiEvent.GoToEpisodeDetails(id)
             _uiEvent.emit(event)
             _uiState.update { it.copy(isLoading = false) }

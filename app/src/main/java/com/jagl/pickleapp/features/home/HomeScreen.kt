@@ -55,7 +55,7 @@ fun HomeScreen(
         HomeContent(
             modifier = modifier.padding(innerPadding),
             uiState = uiState,
-            getMoreCharacters = viewModel::getMoreEpisodes,
+            getMoreEpisodes = viewModel::getMoreEpisodes,
             onClick = viewModel::onGoToDetail
         )
 
@@ -66,7 +66,7 @@ fun HomeScreen(
 fun HomeContent(
     modifier: Modifier = Modifier.fillMaxSize(),
     uiState: UiState,
-    getMoreCharacters: () -> Unit,
+    getMoreEpisodes: () -> Unit,
     onClick: (id: Long) -> Unit,
 ) {
     Column(
@@ -87,7 +87,7 @@ fun HomeContent(
         ) {
             itemsIndexed(items = data) { index, episode ->
                 if (!uiState.isLoading && ((index + 1) >= (uiState.page * 20))) {
-                    getMoreCharacters()
+                    getMoreEpisodes()
                 }
                 EpisodeItem(item = episode, onClick = onClick)
             }
@@ -100,6 +100,6 @@ fun HomeContent(
 @Composable
 private fun HomeScreenPreview() {
     val uiState = UiState()
-    HomeContent(uiState = uiState, onClick = {}, getMoreCharacters = {})
+    HomeContent(uiState = uiState, onClick = {}, getMoreEpisodes = {})
 }
 
