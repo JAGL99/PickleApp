@@ -9,3 +9,4 @@ val String.Companion.SEARCH_BY_NAME: String
 
 val String.Companion.SEARCH_BY_EPISODE: String
     get() = "episode"
+

@@ -31,7 +31,7 @@ fun CharacterItem(
 ) {
     Card(
         modifier = modifier
-            .fillMaxWidth()
+            .width(150.dp)
             .padding(6.dp)
             .clickable(onClick = { onClick(item.id) }),
         shape = RoundedCornerShape(corner = CornerSize(12.dp))
